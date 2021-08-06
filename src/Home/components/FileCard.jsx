@@ -25,7 +25,7 @@ const FileCard = ({ fileList, clickFile }) => {
                             </Col>
                          if (newFile.fileType === "MP4")
                             return <Col key={newFile.fileName}  xs="auto" className="col-content">
-                            <           Card onClick={clickFile} className="file-looks-MP4" id={newFile.filePath}>
+                            <           Card onClick={clickFile} className="file-looks-MP4" id={newFile.filePath} title={newFile.fileType}>
                                             <Card.Body>
                                                <Card.Title style={{ color: "black" }}>{newFile.fileName}</Card.Title> 
                                              </Card.Body>

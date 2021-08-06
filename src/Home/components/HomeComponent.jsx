@@ -13,7 +13,8 @@ class HomeComponent extends Component {
             stack: []
         }
         this.clickFile = this.clickFile.bind(this);
-        this.getFiles = this.getFiles.bind(this);    
+        this.getFiles = this.getFiles.bind(this);
+        this.getMovie = this.getMovie.bind(this);
     }
 
 
@@ -34,6 +35,11 @@ class HomeComponent extends Component {
     
     }
 
+    getMovie(path) {
+         this.props.history.push({ pathname: '/movie', state: {stack: this.state.stack, pathToMovie: path }});  
+    
+    }
+
     componentDidUpdate(){    
         window.onpopstate = e => {
             this.props.history.push({ pathname: '/home', state: { stack: this.state.stack } });
@@ -50,10 +56,13 @@ class HomeComponent extends Component {
     
     clickFile(e) {
         e.preventDefault();
-        let newPath = { path: e.currentTarget.id }
+        let newPath = { path: e.currentTarget.id }  
         this.state.stack.push(this.state.path)
         this.setState(newPath)
-        this.getFiles( newPath)
+        if (e.currentTarget.title === "MP4") {
+            this.getMovie(newPath)
+        }
+        this.getFiles(newPath)
     }
 
 
