@@ -6,8 +6,6 @@ import HomeComponent from './Home/components/HomeComponent';
 import MovieComponent from './Home/components/MovieComponent';
 
 
-
-
 function App() {
 
   

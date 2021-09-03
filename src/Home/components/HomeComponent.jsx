@@ -19,7 +19,11 @@ class HomeComponent extends Component {
 
 
     componentDidMount() {
-        this.state.stack = this.props.location.state.stack;
+        try{
+          this.state.stack = this.props.location.state.stack;
+        }catch{
+            this.setState({stack: []})
+        }
         let tempPath;
         if (this.state.stack.length > 0) {
           tempPath = { path: this.state.stack.pop()}; 
@@ -35,8 +39,8 @@ class HomeComponent extends Component {
     
     }
 
-    getMovie(path) {
-         this.props.history.push({ pathname: '/movie', state: {stack: this.state.stack, pathToMovie: path }});  
+    getMovie(filePath) {
+         this.props.history.push({ pathname: '/movie', state: {stack: this.state.stack, filePath: filePath }});  
     
     }
 

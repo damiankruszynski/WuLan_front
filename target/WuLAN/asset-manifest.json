@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "http://localhost:8080/WuLAN/static/css/main.a617e044.chunk.css",
-    "main.js": "http://localhost:8080/WuLAN/static/js/main.5fd50fc4.chunk.js",
-    "main.js.map": "http://localhost:8080/WuLAN/static/js/main.5fd50fc4.chunk.js.map",
-    "runtime-main.js": "http://localhost:8080/WuLAN/static/js/runtime-main.5eeaa3c9.js",
-    "runtime-main.js.map": "http://localhost:8080/WuLAN/static/js/runtime-main.5eeaa3c9.js.map",
-    "static/css/2.4be38407.chunk.css": "http://localhost:8080/WuLAN/static/css/2.4be38407.chunk.css",
-    "static/js/2.98479a29.chunk.js": "http://localhost:8080/WuLAN/static/js/2.98479a29.chunk.js",
-    "static/js/2.98479a29.chunk.js.map": "http://localhost:8080/WuLAN/static/js/2.98479a29.chunk.js.map",
-    "static/js/3.9a7bcf47.chunk.js": "http://localhost:8080/WuLAN/static/js/3.9a7bcf47.chunk.js",
-    "static/js/3.9a7bcf47.chunk.js.map": "http://localhost:8080/WuLAN/static/js/3.9a7bcf47.chunk.js.map",
+    "main.css": "http://localhost:8080/WuLAN/static/css/main.d6b16972.chunk.css",
+    "main.js": "http://localhost:8080/WuLAN/static/js/main.5dae7bff.chunk.js",
+    "main.js.map": "http://localhost:8080/WuLAN/static/js/main.5dae7bff.chunk.js.map",
+    "runtime-main.js": "http://localhost:8080/WuLAN/static/js/runtime-main.09faf625.js",
+    "runtime-main.js.map": "http://localhost:8080/WuLAN/static/js/runtime-main.09faf625.js.map",
+    "static/css/2.da1eef19.chunk.css": "http://localhost:8080/WuLAN/static/css/2.da1eef19.chunk.css",
+    "static/js/2.a8f97e0d.chunk.js": "http://localhost:8080/WuLAN/static/js/2.a8f97e0d.chunk.js",
+    "static/js/2.a8f97e0d.chunk.js.map": "http://localhost:8080/WuLAN/static/js/2.a8f97e0d.chunk.js.map",
+    "static/js/3.dbb6c7f4.chunk.js": "http://localhost:8080/WuLAN/static/js/3.dbb6c7f4.chunk.js",
+    "static/js/3.dbb6c7f4.chunk.js.map": "http://localhost:8080/WuLAN/static/js/3.dbb6c7f4.chunk.js.map",
     "index.html": "http://localhost:8080/WuLAN/index.html",
-    "static/css/2.4be38407.chunk.css.map": "http://localhost:8080/WuLAN/static/css/2.4be38407.chunk.css.map",
-    "static/css/main.a617e044.chunk.css.map": "http://localhost:8080/WuLAN/static/css/main.a617e044.chunk.css.map",
-    "static/js/2.98479a29.chunk.js.LICENSE.txt": "http://localhost:8080/WuLAN/static/js/2.98479a29.chunk.js.LICENSE.txt"
+    "static/css/2.da1eef19.chunk.css.map": "http://localhost:8080/WuLAN/static/css/2.da1eef19.chunk.css.map",
+    "static/css/main.d6b16972.chunk.css.map": "http://localhost:8080/WuLAN/static/css/main.d6b16972.chunk.css.map",
+    "static/js/2.a8f97e0d.chunk.js.LICENSE.txt": "http://localhost:8080/WuLAN/static/js/2.a8f97e0d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.5eeaa3c9.js",
-    "static/css/2.4be38407.chunk.css",
-    "static/js/2.98479a29.chunk.js",
-    "static/css/main.a617e044.chunk.css",
-    "static/js/main.5fd50fc4.chunk.js"
+    "static/js/runtime-main.09faf625.js",
+    "static/css/2.da1eef19.chunk.css",
+    "static/js/2.a8f97e0d.chunk.js",
+    "static/css/main.d6b16972.chunk.css",
+    "static/js/main.5dae7bff.chunk.js"
   ]
 }
