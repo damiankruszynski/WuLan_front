@@ -1,8 +1,10 @@
 class consts {
 
     getAUTH_API_BASE_URL() {
-        return "http://localhost:8080/wulan_back/";
+        return "http://192.168.50.94:8080/wulan_back/";
     };
+
+    
 
 }
 

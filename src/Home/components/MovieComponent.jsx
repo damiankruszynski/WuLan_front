@@ -5,6 +5,7 @@ import authHeader from '../../Login/services/AuthService';
 import consts from '../../consts';
 import axios from 'axios';
 import Player from './Player';
+import Player2 from './Player2';
 
 class MovieComponent extends Component {
     constructor(props) {
@@ -30,7 +31,7 @@ class MovieComponent extends Component {
                 <div className="App-header">
                     <div className="container-fluid ">
                             <div>
-                               <Player filePath={this.state.filePath}></Player>
+                               <Player2 filePath={this.state.filePath}></Player2>
                             </div>
                       </div>
                 </div>
