@@ -1,64 +1,66 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import LoginService from '../services/LoginService';
 
 
-class LoginComponent extends Component {
+function LoginComponent(props){
 
-  constructor(props) {
-    super(props)
-
-    this.state = { username: '', password: '', message: '' };
-    this.changeUserNameHandler = this.changeUserNameHandler.bind(this);
-    this.changePasswordHandler = this.changePasswordHandler.bind(this);
-    this.logiIn = this.logiIn.bind(this);
-    this.errorMessage = this.errorMessage.bind(this);
-  }
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [messageError, setMessageError] = useState(null);
 
 
-
-  changeUserNameHandler(event) {
-    this.setState({ username: event.target.value });
-    this.setState({ message: '' });
-  }
-
-  changePasswordHandler(event) {
-    this.setState({ password: event.target.value });
-    this.setState({ message: '' });
-  }
-
-  logiIn(e) {
+  function logiIn(e) {
     e.preventDefault();
 
-    if (this.state.username === '' || this.state.password === '') {
+    if (userName === '' || password === '') {
       return;
     }
-    let loginRequest = { username: this.state.username, password: this.state.password };
+    let loginRequest = {
+      username: userName,
+      password: password
+    };
     LoginService.logIn(loginRequest)
       .then(
         () => {
-          this.props.history.push({ pathname: '/home', state: {stack : [] }});  
+          props.history.push("/home");  
           window.location.reload();
         },
         error => {
-          this.setState({ message: 'Błędne dane logowania.' });
-          this.render();
+          if (error.message.indexOf("Network Error") !== -1) {
+            setMessageError("Serwer nie odpowiada!");
+            console.log(error.message);
+          } else {
+            setMessageError("Błędne dane logowania!");
+            console.log(error.message);
+          }
+          
         });
   }
 
-  errorMessage() {
-    if (this.state.message !== '') {
+  function errorMessage() {
+    if (messageError) {
       return (
         <div className="form-group">
           <div className="alert alert-danger" role="alert">
-            {this.state.message}
+            {
+              messageError
+            }
           </div>
         </div>
       )
+    } else {
+      return null;
     }
   }
 
+  function changeUserNameHandler(e) {
+    setUserName(e.target.value);
+  }
 
-  render() {
+  function changePasswordHandler(e) {
+    setPassword(e.target.value);
+  }
+
     return (
       <div className="App">
       <header className="App-header">
@@ -68,8 +70,8 @@ class LoginComponent extends Component {
               <input type="username"
                 id="username"
                 className="flex-sm-row"
-                value={this.state.username}
-                onChange={this.changeUserNameHandler}
+                value={userName}
+                onChange={changeUserNameHandler}
                 placeholder="Login"
                 required
                 autoFocus />
@@ -79,21 +81,20 @@ class LoginComponent extends Component {
                 id="password"
                 className="flex-sm-row"
                 placeholder="Hasło"
-                value={this.state.password}
-                onChange={this.changePasswordHandler}
+                value={password}
+                onChange={changePasswordHandler}
                 required />
                <div>
                 {
-                  this.errorMessage()
+                  errorMessage()
                 }
               </div>              
-                <button className="btn-primary mt-4" type="submit" onClick={this.logiIn} >Zaloguj</button>
+                <button className="btn-primary mt-4" type="submit" onClick={logiIn} >Zaloguj</button>
             </div>
           </form>
         </header>
         </div>
     );
-  }
 }
 
 export default LoginComponent;

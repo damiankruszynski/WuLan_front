@@ -1,16 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 
-class FooterComponent extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-
-        }
-    }
-
-    render() {
+function FooterComponent(props){ 
         return (
             <Navbar fixed="bottom">
                 <Nav className="nav-item m-auto">
@@ -18,7 +9,6 @@ class FooterComponent extends Component {
                 </Nav>
             </Navbar>
         );
-    }
 }
 
 export default FooterComponent;

@@ -1,14 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import ReactPlayer from 'react-player';
 import consts from '../../consts';
 
-const Player2 = ({ filePath }) => {
+function Player (props) {
 
     var urlVideo = new URL(consts.getAUTH_API_BASE_URL()+"stream");
-    urlVideo.searchParams.set('filePath', filePath.path);
-
-    var urlSubs = new URL(consts.getAUTH_API_BASE_URL() + "stream");
-    urlSubs.searchParams.set('filePath', filePath.path);
+    urlVideo.searchParams.set('filePath', props.filePath);
 
      return (
             <div className="App">
@@ -21,4 +18,4 @@ const Player2 = ({ filePath }) => {
 
 }
 
-export default Player2;
+export default Player;

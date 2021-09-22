@@ -3,16 +3,15 @@ import authHeader from '../../Login/services/AuthService';
 import consts from '../../consts';
 
 
-class HomeService {
-
-    getFiles(path) {
-        let token = {
-            headers: authHeader(),
-            params: path
-        };
-        return axios.get(consts.getAUTH_API_BASE_URL() + 'files', token);
+async function homeServiceGetFile(dirPath) {
+ 
+    let token = {
+        headers: authHeader(),
+        params: {
+            path: dirPath
+        }
     };
+    return await axios.get(consts.getAUTH_API_BASE_URL() + 'files', token).then((response) => response.data);
+};
 
-}
-
-export default new HomeService()
+export default homeServiceGetFile()

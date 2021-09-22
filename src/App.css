@@ -37,7 +37,7 @@
   }
 }
 
-.file-looks-folder{
+.file-looks-FOLDER{
   background-color: darkgoldenrod !important;
   border-radius: 0.3rem !important;
   border-color: black !important;  
@@ -45,7 +45,7 @@
   cursor: pointer;
 }
 
-.file-looks-file{
+.file-looks-FILE{
   background-color: rgb(90, 91, 116) !important;
   border-radius: 0.3rem !important;
   border-color: black !important;  
@@ -61,7 +61,7 @@
   cursor: pointer;
 }
 
-.file-looks-others{
+.file-looks-OTHERS{
   background-color: rgb(250, 250, 250) !important;
   border-radius: 0.3rem !important;
   border-color: black !important;  
