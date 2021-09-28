@@ -1,10 +1,9 @@
 class consts {
 
     getAUTH_API_BASE_URL() {
-        return "http://192.168.50.94:8080/wulan_back/";
+        let HostIp = window.location.hostname;
+        return "http://"+HostIp+":8080/wulan_back/";
     };
-
-    
 
 }
 

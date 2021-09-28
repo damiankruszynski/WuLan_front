@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Card, Col, Row } from 'react-bootstrap';
+import { Card, Col } from 'react-bootstrap';
 
 function FileCard(props) {
   
@@ -19,10 +19,7 @@ function FileCard(props) {
   
 
   return (
-    <Row xs = "auto" className="justify-content-center align-items-center" >
-      {body}
-    </Row>
-      
+      body    
   );
 };
 

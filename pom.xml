@@ -81,7 +81,7 @@
                         <artifactId>exec-maven-plugin</artifactId>
                         <configuration>
                             <environmentVariables>
-                                <PUBLIC_URL>http://192.168.50.94:8080/${project.artifactId}</PUBLIC_URL>
+                                <PUBLIC_URL>http://192.168.50.68:8080/${project.artifactId}</PUBLIC_URL>
                                 <REACT_APP_ROUTER_BASE>/${project.artifactId}</REACT_APP_ROUTER_BASE>
                             </environmentVariables>
                         </configuration>
@@ -99,7 +99,7 @@
                         <artifactId>exec-maven-plugin</artifactId>
                         <configuration>
                             <environmentVariables>
-                                <PUBLIC_URL>http://192.168.50.94:8080/${project.artifactId}</PUBLIC_URL>
+                                <PUBLIC_URL>http:/192.168.50.68:8080/${project.artifactId}</PUBLIC_URL>
                                 <REACT_APP_ROUTER_BASE>/${project.artifactId}</REACT_APP_ROUTER_BASE>
                             </environmentVariables>
                         </configuration>

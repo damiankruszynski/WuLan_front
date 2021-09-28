@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LoginService from '../services/LoginService';
 
 
@@ -8,10 +8,28 @@ function LoginComponent(props){
   const [password, setPassword] = useState("");
   const [messageError, setMessageError] = useState(null);
 
+  useEffect( () => {
+    if(localStorage.getItem('username') !== null){
+      setUserName(localStorage.getItem('username'));
+    }
+    if(localStorage.getItem('password') !== null) {
+     setPassword(localStorage.getItem('password')); 
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  function logiIn(e) {
-    e.preventDefault();
+  useEffect( () => {
+    if(localStorage.getItem('user') !== null){
+      logiIn();
+    }
+  });
 
+
+function logInEvent(e){
+  e.preventDefault();
+  logiIn();
+}
+
+  function logiIn() {
     if (userName === '' || password === '') {
       return;
     }
@@ -55,10 +73,12 @@ function LoginComponent(props){
 
   function changeUserNameHandler(e) {
     setUserName(e.target.value);
+    localStorage.setItem('username', e.target.value);
   }
 
   function changePasswordHandler(e) {
     setPassword(e.target.value);
+    localStorage.setItem('password', e.target.value);
   }
 
     return (
@@ -89,7 +109,7 @@ function LoginComponent(props){
                   errorMessage()
                 }
               </div>              
-                <button className="btn-primary mt-4" type="submit" onClick={logiIn} >Zaloguj</button>
+                <button className="btn-primary mt-4" type="submit" onClick={logInEvent} >Zaloguj</button>
             </div>
           </form>
         </header>
