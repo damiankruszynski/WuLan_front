@@ -1,6 +1,7 @@
 import axios from 'axios';
-import authHeader from '../../Login/services/AuthService';
+import authHeader from '../../Login/services/AuthHeader';
 import consts from '../../consts';
+import getProfile from '../../Login/services/AuthProfile';
 
 
 class API_HomeService {
@@ -29,7 +30,8 @@ class API_HomeService {
         let data = {
             headers: authHeader(),
             params: {
-                filePath: filePath
+                filePath: filePath,
+                profileId: getProfile().id
             }
         };
         try{
@@ -48,8 +50,9 @@ class API_HomeService {
 
     setTimeWatched(filePath, secondWatched) {
         const data = {
-                pathFile: filePath,
-                timeWatched: secondWatched
+                filePath: filePath,
+                timeWatched: secondWatched,
+                profileId: getProfile().id
         };
         axios.put(consts.getAUTH_API_BASE_URL() + 'saveWatchedTimeMovie', data, 
         { headers: authHeader() })

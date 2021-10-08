@@ -40,7 +40,7 @@ function logInEvent(e){
     LoginService.logIn(loginRequest)
       .then(
         () => {
-          props.history.push("/home");  
+          props.history.push("/profile");  
           window.location.reload();
         },
         error => {

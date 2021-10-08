@@ -5,7 +5,7 @@ function FooterComponent(props){
         return (
             <Navbar fixed="bottom">
                 <Nav className="nav-item m-auto">
-                    All Rights Reserved 2020 @DK
+                    All Rights Reserved 2021 @DK
                 </Nav>
             </Navbar>
         );

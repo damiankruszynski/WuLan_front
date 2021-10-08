@@ -1,18 +1,17 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
+import { IoPower } from "react-icons/io5";
 
 
 export default function LogutButton(props) {
 
     function logout(){
         localStorage.removeItem('user');
+        localStorage.removeItem('profile');
         props.history.push("/login");  
         window.location.reload();
     }
 
     return (
-        <div>
-            <Button onClick={logout}>Wyloguj</Button>
-        </div>
+            <IoPower size="5rem" color="red" cursor="pointer" onClick={logout}>Wyloguj</IoPower>
     );
 }
