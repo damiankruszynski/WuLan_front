@@ -1,25 +1,32 @@
 import * as React from "react";
-import { Card, Col } from 'react-bootstrap';
+import { BsFolderFill } from "react-icons/bs";
+import { AiOutlineFileUnknown } from "react-icons/ai";
+import { BiMoviePlay } from "react-icons/bi";
 
 function FileCard(props) {
   
   const file = props.file;
   const onClickFile = props.onClickFile;
-  const body = [];    
-  let fileLooks = "file-looks-" + file.fileType;  
+  const body = [];
+      
   
-  body.push(
-    <Col key={file.fileName} xs="auto" className="col-content">
-      <Card onClick={onClickFile} className={fileLooks} id={file.filePath}>
-          <Card.Body>
-          <Card.Title style={{color: "black" }}>{file.fileName}</Card.Title>
-        </Card.Body>
-      </Card>
-    </Col>) 
+    body.push(
+    <div key={file.fileName} className="col">
+        <div className="card file-looks"  onClick={onClickFile} id={file.filePath}>
+          <div className="card-img-top justify-content-center">
+            {file.fileType.toUpperCase() === 'FOLDER' ? <BsFolderFill size="100%" color="darkgoldenrod" /> : null}
+            {file.fileType.toUpperCase() === 'MP4' ? <BiMoviePlay size="100%" color="forestgreen" /> : null}
+            {file.fileType.toUpperCase() === 'FILE' ? <AiOutlineFileUnknown size="100%" color="darkgoldenrod" /> : null}
+          </div>
+        <div className="card-body">
+            <h4 className="card-title text-center text-white">{file.fileName}</h4>
+        </div>
+      </div>
+    </div>) 
   
 
   return (
-      body    
+      body 
   );
 };
 

@@ -51,7 +51,7 @@ import API_HomeService from '../services/API_HomeService';
     }
 
      return (
-        <div>
+        <div className="d-flex">
             <ReactPlayer
                 url={urlVideo} 
                 controls={true}
