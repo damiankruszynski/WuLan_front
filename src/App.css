@@ -51,3 +51,13 @@
   min-height: 100vh;
   background: black;
 }
+
+
+svg.GrAddCircle > path{
+  fill: bisque;
+}
+
+.modal-look{
+  background-color: dimgray;
+  color: bisque;
+}

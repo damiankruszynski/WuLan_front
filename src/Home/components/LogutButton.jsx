@@ -8,10 +8,9 @@ export default function LogutButton(props) {
         localStorage.removeItem('user');
         localStorage.removeItem('profile');
         props.history.push("/login");  
-        window.location.reload();
     }
 
     return (
-            <IoPower size="5rem" color="red" cursor="pointer" onClick={logout}>Wyloguj</IoPower>
+            <IoPower size="45" color="red" cursor="pointer" onClick={logout}>Wyloguj</IoPower>
     );
 }

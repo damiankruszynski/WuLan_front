@@ -41,7 +41,6 @@ function logInEvent(e){
       .then(
         () => {
           props.history.push("/profile");  
-          window.location.reload();
         },
         error => {
           if (error.message.indexOf("Network Error") !== -1) {

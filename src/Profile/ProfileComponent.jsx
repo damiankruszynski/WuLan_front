@@ -6,9 +6,9 @@ function ProfileComponent(props) {
 
     const profile = props.profile;
 
- 
+
     return (
-        <Card id={profile.id} onClick={props.onClickProfile} border="success" 
+        <Card id={profile.profileId} onClick={props.onClickProfile} border="success" 
             style={{ width: '10rem', cursor: "pointer", background: "black", alignItems: "center"}}>
             <FcReddit size="80%"/>
             <Card.Body>

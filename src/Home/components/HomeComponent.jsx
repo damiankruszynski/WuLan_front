@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import FileCard from './FileCard';
 import API_HomeService from '../services/API_HomeService';
 import Player from './Player';
@@ -6,28 +6,58 @@ import LogutButton from './LogutButton';
 import getProfile from '../../Login/services/AuthProfile'
 import authHeader from '../../Login/services/AuthHeader';
 import ProfileComponent from '../../Profile/ProfileComponent';
+import ShowModal from '../../CommonUtils/ShowModal';
+import ImageGallery from 'react-image-gallery';
 
 function HomeComponent(props) {
     
     const [fileList, setFileList] = useState([]);
+    const [pictureList, setPictureList] = useState([]);
     const [stackPathDir, setStackPathDir] = useState([]);
     const [currentPathDir, setCurrentPathDir] = useState("");
     const [movieFile, setMovieFile] = useState(null);
+    const [movieFileWatched, setMovieFileWatched] = useState(null);
     const [noFile, setNoFileMessage] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [showGalery, setShowGalery] = useState(false);
     
     useEffect(() => {
         if (!getProfile()) {
             props.history.push("/profile")
-            window.location.reload();
         }
         if (!authHeader()) {
             props.history.push("/login")
-            window.location.reload();
         }
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
     useEffect(() => { getFileList(currentPathDir) }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+
+    useEffect(() => {
+        loadPictures();
+        return(() => {;})
+    }, [showGalery]);// eslint-disable-line react-hooks/exhaustive-deps
+
+
+    async function loadPictures(){
+        let pictureListTemp = [];
+        if (fileList !== undefined && fileList.length !== 0) {
+            for(const file of fileList) {
+               if(file.fileType.toUpperCase() === 'PICTURE'){
+                   file.image =  await getImageFromAPI(file.filePath);
+                   pictureListTemp.push({original: file.image, thumbnail: file.image });
+               }
+            };
+            setPictureList(pictureListTemp);
+        }
+    }
+
+    async function getImageFromAPI(filePath){
+         return await API_HomeService.getImage(filePath);  
+    }
+
  
     async function getFileList(dirPath) {
+        setPictureList([]);
         setNoFileMessage(false);
         let response = await API_HomeService.getFileList(dirPath);
         setFileList(response);
@@ -36,7 +66,11 @@ function HomeComponent(props) {
     };
 
     function getPreviousPath(){
+        if(movieFile){
+            setMovieFileWatched(movieFile);
+        }
         setMovieFile(null);
+        setShowGalery(null);
         if(stackPathDir.length === 0){
             return ""
         }else{
@@ -61,30 +95,75 @@ function HomeComponent(props) {
         }
     }
 
+    const [indexForThumbnai, setIndexForThumbnai ] = useState(0);
+
+    function checkItCanBePicture(path){
+        if(path.toUpperCase().indexOf("JPEG") !== -1 || path.toUpperCase().indexOf("JPG") !== -1 ){
+            let i = 0;
+            for(const file of fileList) {
+                  if(file.filePath === path){
+                      setIndexForThumbnai(i);
+                    }                  
+                  i++;
+            }
+            setShowGalery(true);
+            return true;
+        }else{
+          return false;
+        }
+    }
+
     function onClickFile(e) {
         const path = e.currentTarget.id;
-        addToStack(currentPathDir);
-        if(!checkItCanBeMovie(path)){
+        if(!checkItCanBePicture(path)){
+          getFileList(path);  
+        }
+        else if(!checkItCanBeMovie(path)){
+          addToStack(currentPathDir);  
           getFileList(path);
         }
     }
 
     function onClickGoEditProfile() {
-         props.history.push("/editProfile")
-         window.location.reload();
+         props.history.push("/editProfile");
     }
 
     let files = [];
     if (fileList !== undefined && fileList.length !== 0) {
         Array.from(fileList).forEach((file) => {
             files.push(<FileCard file={file} key={file.filePath} onClickFile={onClickFile} />)
-        });    
+        });
     } else {
         if (noFile) {
-            files.push(<h1 id="1" className="text-white">Brak danych</h1>);
-        }
-    
+            files.push(<h1 key="1" className="text-white">Brak danych</h1>);
+        }   
     }
+
+    function saveAsWatched(){
+        if(movieFileWatched){
+            API_HomeService.setTimeWatched(movieFileWatched.filePath, 0, true);
+        }        
+        setMovieFileWatched(null);
+    }
+
+    function handleShowModal(){
+        setShowModal(true);
+    }
+    
+    function handleDisableShowModal(){
+        setShowModal(false);
+        setMovieFileWatched(null);
+    }
+
+    function handleConfirn(){
+        saveAsWatched();
+        handleDisableShowModal();
+        getFileList(currentPathDir);
+    }
+    
+
+   const [, updateState] = React.useState();
+   const forceUpdate = React.useCallback(() => updateState({}), []);
 
    const backButton = (
         <>
@@ -94,11 +173,23 @@ function HomeComponent(props) {
     
     const profile = getProfile();
 
+    const question = "Czy film został obejrzany do końca?";
+
+    const imageGallery = useRef(null);
+
+    function slideToIdnexRef(){
+        if(imageGallery.current && indexForThumbnai >0){
+            imageGallery.current.slideToIndex(indexForThumbnai);
+            setIndexForThumbnai(0);
+        }
+    }
+
     return (
         <div className="d-flex home flex-column justify-content-between">
+            {showModal ? <ShowModal handleDisableShowModal={handleDisableShowModal} handleConfirn={handleConfirn}  question={question}/> : null}
             <div className=" d-flex row m-3 flex-row">
                 <div className="col" tabIndex="0">
-                    <ProfileComponent profile={profile} onClickProfile={onClickGoEditProfile}/>
+                    <ProfileComponent onClickProfile={onClickGoEditProfile} profile={profile} forceUpdate={forceUpdate}/>
                 </div>
                 <div className="col align-self-center">
                     <div className="d-flex float-end">
@@ -106,11 +197,16 @@ function HomeComponent(props) {
                     </div>
                 </div>
             </div>
-            <div className="d-flex row align-self-center" style={{ maxWidth: "35%" }} >            
-               {files.length !== 0 && !movieFile ? files : null} 
+            <div className="d-flex align-self-center justify-content-center" style={{ width: "80%" }} >  
+                <div className="row algin-align-items-end justify-content-center">
+                    {files.length !== 0 && !movieFile && !showGalery? files : null} 
+                </div>     
+                <div>
+                    {showGalery ? <ImageGallery onImageLoad={slideToIdnexRef} ref={imageGallery} thumbnailPosition="left" items={pictureList} /> : null  }
+                </div>     
             </div>
             <div className="d-flex row align-self-center movie" style={{ maxWidth: "80%", maxHeight: "80%" }}>
-                {movieFile ? <Player file={movieFile}/> : null }
+                {movieFile ? <Player file={movieFile} handleShowModal={handleShowModal}/> : null }
             </div>
             <div className="d-flex row m-4 flex-column">
                 <div className="row">

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactPlayer from 'react-player';
 import consts from '../../consts';
 import API_HomeService from '../services/API_HomeService';
@@ -7,12 +7,34 @@ import API_HomeService from '../services/API_HomeService';
 
     const filePath = props.file.filePath;
 
+    let movieTimeInSeconds = 0;
+    let movieTimeWatched = 0;
+    
+
+    useEffect( () => {
+        showModalOnEnd()
+        return () =>{
+            showModalOnEnd();
+        }
+    },);
+
+    function showModalOnEnd(){
+        let procent_80 = (0.8)*movieTimeInSeconds;
+        let procent_90 = (0.9)*movieTimeInSeconds;
+        if(movieTimeWatched > procent_80 && movieTimeWatched < procent_90 ){
+            props.handleShowModal();
+        }
+        else if( movieTimeWatched > procent_90 ){
+            API_HomeService.setTimeWatched(filePath, 0, true);
+            
+        }
+    }
+
     var urlVideo = new URL(consts.getAUTH_API_BASE_URL()+"stream");
     urlVideo.searchParams.set('filePath', filePath);
 
     const urlSub = new URL(consts.getAUTH_API_BASE_URL()+"stream");
     urlSub.searchParams.set('filePath', props.file.subPath);
-
 
 
     let onStart = false;
@@ -26,12 +48,14 @@ import API_HomeService from '../services/API_HomeService';
                 timeWatched = 0;
             }
             e.seekTo(timeWatched,'secounds')
+            movieTimeInSeconds = e.getDuration();
             onStart = true;
         }
     }
 
     function saveScoundPlayedInAPI(secounds){
-        API_HomeService.setTimeWatched(filePath,secounds);
+        movieTimeWatched = secounds;
+        API_HomeService.setTimeWatched(filePath,secounds, false, Math.floor(movieTimeInSeconds));
     }
 
 

@@ -11,7 +11,8 @@ class API_HomeService {
         let data = {
             headers: authHeader(),
             params: {
-                path: dirPath
+                path: dirPath,
+                profileId: getProfile().profileId
             }
         };
         try{
@@ -31,7 +32,7 @@ class API_HomeService {
             headers: authHeader(),
             params: {
                 filePath: filePath,
-                profileId: getProfile().id
+                profileId: getProfile().profileId
             }
         };
         try{
@@ -48,11 +49,13 @@ class API_HomeService {
     
     }
 
-    setTimeWatched(filePath, secondWatched) {
+    setTimeWatched(filePath, secondWatched, isWatched, movieTimeInSeconds) {
         const data = {
                 filePath: filePath,
                 timeWatched: secondWatched,
-                profileId: getProfile().id
+                profileId: getProfile().profileId,
+                isWatched: isWatched,
+                movieTimeInSeconds: movieTimeInSeconds
         };
         axios.put(consts.getAUTH_API_BASE_URL() + 'saveWatchedTimeMovie', data, 
         { headers: authHeader() })
@@ -63,6 +66,29 @@ class API_HomeService {
         }) 
             
     }
+
+    async getImage(filePath){
+         let data = {
+            responseType: 'blob', 
+            headers: authHeader(),
+            params: {
+                filePath: filePath,
+                profileId: getProfile().profileId
+            }
+        };
+        try{
+            let response = function() {
+                    return axios.get(consts.getAUTH_API_BASE_URL() + 'stream', data)
+                } 
+
+            let responseData =  await response();
+            let url = URL.createObjectURL(responseData.data)
+            return url;
+        }catch(e){
+          console.log(e);  
+        }
+    }
+
 
 
 };
