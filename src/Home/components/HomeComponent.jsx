@@ -38,21 +38,22 @@ function HomeComponent(props) {
     }, [showGalery]);// eslint-disable-line react-hooks/exhaustive-deps
 
 
-    async function loadPictures(){
+
+     function loadPictures(){
         let pictureListTemp = [];
         if (fileList !== undefined && fileList.length !== 0) {
             for(const file of fileList) {
                if(file.fileType.toUpperCase() === 'PICTURE'){
-                   file.image =  await getImageFromAPI(file.filePath);
-                   pictureListTemp.push({original: file.image, thumbnail: file.image });
+                   pictureListTemp.push({original: getURLFor(file.filePath, false), 
+                                        thumbnail: getURLFor(file.filePath, true) });
                }
             };
             setPictureList(pictureListTemp);
         }
     }
 
-    async function getImageFromAPI(filePath){
-         return await API_HomeService.getImage(filePath);  
+    function getURLFor(filePath, isPrewiew){
+         return API_HomeService.getURLImage(filePath, isPrewiew);  
     }
 
  
@@ -115,10 +116,13 @@ function HomeComponent(props) {
 
     function onClickFile(e) {
         const path = e.currentTarget.id;
-        if(!checkItCanBePicture(path)){
-          getFileList(path);  
+        if(checkItCanBePicture(path)){
+            ;
         }
-        else if(!checkItCanBeMovie(path)){
+        else if(checkItCanBeMovie(path)){
+          addToStack(currentPathDir);  
+        }
+        else{
           addToStack(currentPathDir);  
           getFileList(path);
         }
@@ -202,7 +206,13 @@ function HomeComponent(props) {
                     {files.length !== 0 && !movieFile && !showGalery? files : null} 
                 </div>     
                 <div>
-                    {showGalery ? <ImageGallery onImageLoad={slideToIdnexRef} ref={imageGallery} thumbnailPosition="left" items={pictureList} /> : null  }
+                    {showGalery ? <ImageGallery onImageLoad={slideToIdnexRef} 
+                                                ref={imageGallery} 
+                                                thumbnailPosition="left" 
+                                                items={pictureList}
+                                                useBrowserFullscreen = {false}
+                                                showIndex = {true}
+                                                lazyLoad /> : null  }
                 </div>     
             </div>
             <div className="d-flex row align-self-center movie" style={{ maxWidth: "80%", maxHeight: "80%" }}>

@@ -67,18 +67,39 @@ class API_HomeService {
             
     }
 
-    async getImage(filePath){
+
+    getURLImage(filePath, isPrewiew){
+        let params ={
+             filePath: filePath
+        }
+        let endPoint;
+        if(isPrewiew){
+            endPoint = 'getImagePreview';
+        }else{
+            endPoint = 'getImage';
+        }  
+        const searchParams = new URLSearchParams(params);
+        
+        return consts.getAUTH_API_BASE_URL() + endPoint +"?"+searchParams.toString();  
+    }
+
+    async getImage(filePath, isPrewiew){
          let data = {
             responseType: 'blob', 
             headers: authHeader(),
             params: {
-                filePath: filePath,
-                profileId: getProfile().profileId
+                filePath: filePath
             }
         };
+        let endPoint
+        if(isPrewiew){
+            endPoint = 'getImagePreview';
+        }else{
+            endPoint = 'getImage';
+        }
         try{
             let response = function() {
-                    return axios.get(consts.getAUTH_API_BASE_URL() + 'stream', data)
+                    return axios.get(consts.getAUTH_API_BASE_URL() + endPoint, data)
                 } 
 
             let responseData =  await response();
@@ -88,7 +109,6 @@ class API_HomeService {
           console.log(e);  
         }
     }
-
 
 
 };

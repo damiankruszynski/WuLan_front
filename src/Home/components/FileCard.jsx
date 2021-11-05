@@ -41,7 +41,7 @@ function FileCard(props) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
       
   async function getImageFromAPI(filePath){
-        let image =  await API_HomeService.getImage(filePath);  
+        let image =  await API_HomeService.getImage(filePath, true);  
         setImage(image);
   }
   
